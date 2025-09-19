@@ -8,7 +8,7 @@ Comprehensive subscription-based platform designed for managing customer relatio
 ## Overview
 
 Troopack provides a seamless experience for users to:
-- Register and activate subscriptions on the main website[](https://troopack.com/).
+- Register and activate subscriptions on the main website[troopack](https://troopack.com/).
 - Access a dedicated CRM instance upon subscription activation.
 - Use real-time chat support for immediate assistance.
 - Invite team members (operators/admins) to specific projects via shareable links.
