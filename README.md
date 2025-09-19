@@ -31,7 +31,7 @@ All code in this repository is written in English for clarity and maintainabilit
 - **Chat Support**: Implemented in JavaScript, running on the same server as the CRM for integrated real-time functionality.
 - **Database**: Shared database (e.g., PostgreSQL or similar, containerized) to store user records, subscriptions, CRM data, and project details.
 - **Real-Time Communication**: WebSockets for handling live events like chat messages, notifications, and updates.
-- **Containerization**: Docker with three containers for isolation, scalability, and easy deployment.
+- **Containerization**: Docker for isolation, scalability, and easy deployment.
 - **Other**: Email integration for sending generated passwords and notifications.
 
 ## How It Works
