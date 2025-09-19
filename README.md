@@ -1,4 +1,4 @@
-<img width="500" height="500" alt="troopackLogo" src="https://github.com/user-attachments/assets/9334b678-a810-4615-a528-1ed058f839ce" />
+`<img width="500" height="500" alt="troopackLogo" src="https://github.com/user-attachments/assets/9334b678-a810-4615-a528-1ed058f839ce" />`
 
 Troopack is a comprehensive subscription-based platform designed for managing customer relationships and support operations. It consists of a main website for user registration and subscription handling, integrated with a CRM system and real-time chat support. The platform enables users to subscribe, manage their CRM instances as owners, and invite operators or admins to collaborate on projects. Built with modern technologies, it emphasizes scalability, real-time interactions, and secure data management using containerized architecture.
 Overview
