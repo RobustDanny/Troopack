@@ -1,74 +1,113 @@
 Troopack
-Troopack is a comprehensive subscription-based platform designed for managing customer relationships and support operations. It consists of a main website for user registration and subscription handling, integrated with a CRM system and real-time chat support. The platform enables users to subscribe, manage their CRM instances as owners, and invite operators or admins to collaborate on projects. Built with modern technologies, it emphasizes scalability, real-time interactions, and secure data management using containerized architecture.
+Troopack is a comprehensive subscription-based platform designed for managing customer relationships and support. It consists of a main website for user registration and subscription handling, a CRM system for managing records and operations, and integrated chat support. The system is built with a microservices-like architecture using Docker containers, sharing a common database, and leveraging WebSockets for real-time events.
 Overview
-Troopack provides a seamless experience for users to:
+The platform enables users to subscribe via the main website, after which their details are seamlessly integrated into the CRM system. Users receive credentials via email to access the CRM as owners, or they can be invited as operators/admins to specific projects. The entire codebase is written in English, ensuring clarity and maintainability.
+Key components:
 
-Register and activate subscriptions on the main website.
-Access a dedicated CRM instance upon subscription activation.
-Use real-time chat support for immediate assistance.
-Invite team members (operators/admins) to specific projects via shareable links.
+Main Website: Handles user registration, subscription payments, and initial record creation.
+CRM System: Manages user records, projects, and access roles.
+Chat Support: Provides real-time communication, integrated with the CRM server.
 
-The system is architected around three Docker containers:
+The system runs in three Docker containers:
 
-Main Website Container: Handles user registration, subscription payments, and initial CRM record creation.
-CRM Container: Manages CRM functionalities, including user authentication, project management, and admin/operator roles.
-Shared Database Container: Stores all data, ensuring consistency across the main website and CRM.
+Shared Database Container (for storing all records).
+Main Website Container (Go backend + React Vite frontend).
+CRM and Chat Support Container (Go backend + React TypeScript frontend for CRM, JavaScript for chat support).
 
-Real-time events, such as notifications and chat updates, are powered by WebSockets for efficient, low-latency communication.
-All code in this repository is written in English for clarity and maintainability.
-Tech Stack
+Real-time events, such as updates and notifications, are handled via WebSockets.
+Features
 
-Backend: Go (Golang) for both the main website server and CRM server. Go is chosen for its performance, concurrency support, and simplicity in handling HTTP requests, WebSockets, and database interactions.
-Frontend:
+User Registration and Subscription:
 
-Main Website: React with Vite for fast development and optimized builds.
-CRM: React with TypeScript for type-safe development and enhanced code quality.
+Users register on the main website.
+Upon successful subscription payment, a record is created in the shared database.
+A password is generated and sent via email for CRM access.
 
 
-Chat Support: Implemented in JavaScript, running on the same server as the CRM for integrated real-time functionality.
-Database: Shared database (e.g., PostgreSQL or similar, containerized) to store user records, subscriptions, CRM data, and project details.
-Real-Time Communication: WebSockets for handling live events like chat messages, notifications, and updates.
-Containerization: Docker with three containers for isolation, scalability, and easy deployment.
-Other: Email integration for sending generated passwords and notifications.
+CRM Access:
+
+Owner Login: Users can log in to the CRM as owners via the "Go to CRM" button on the main website.
+Invited Roles: Owners can generate invite links for operators or admins to join specific projects within the CRM.
+
+
+Real-Time Functionality:
+
+WebSockets enable live updates, chat support, and event notifications across the system.
+
+
+Security and Integration:
+
+Shared database ensures data consistency between the main site and CRM.
+Role-based access control for different user types (owners, operators, admins).
+
+
+
+Architecture
+
+Containers:
+
+Database Container: Hosts the shared database (e.g., PostgreSQL or similar) where all user and subscription records are stored.
+Main Website Container:
+
+Backend: Go server for handling API requests, payments, and database interactions.
+Frontend: React with Vite for a fast, responsive user interface.
+
+
+CRM Container:
+
+Backend: Go server shared with chat support.
+Frontend: React with TypeScript for type-safe development.
+Chat Support: JavaScript-based, running on the same server for efficiency.
+
+
+
+
+Data Flow:
+
+User subscribes on the main website.
+Go backend processes payment and creates a record in the shared DB.
+Password is emailed to the user.
+User logs into CRM:
+
+Directly as owner from the main site.
+As operator/admin via invite links.
+
+
+Real-time events (e.g., chat messages, updates) are propagated via WebSockets.
+
+
+Technologies:
+
+Backend: Go (for both main site and CRM).
+Frontend: React Vite (main site), React TypeScript (CRM).
+Real-Time: WebSockets.
+Database: Shared relational DB (containerized).
+Deployment: Docker containers for modularity and scalability.
+Other: Email integration for password delivery, payment gateway (e.g., Stripe or similar, not specified in core code).
+
+
 
 How It Works
-User Registration and Subscription
 
-Users visit the main website at https://troopack.com/ and register an account.
-Upon successful subscription payment (handled securely on the Go backend), the server creates a new record in the shared database container.
-A unique password is generated for the user's CRM access and sent via email.
-This record is referenced by the CRM container, enabling the user to log in and manage their CRM instance.
+Registration on Main Website:
 
-CRM Access and Roles
+User visits https://troopack.com/ and registers.
+Submits payment for subscription.
 
-Owner Access: If a user navigates to the CRM via the "Go to CRM" button on the main website, they are authenticated as the owner of their CRM instance. Owners have full control, including creating projects, managing data, and inviting team members.
-Operator/Admin Access: Owners can generate invitation links for specific projects. When users access the CRM through these links, they log in with operator or admin privileges limited to the invited projects. This supports collaborative workflows, such as team-based support or project management.
 
-Real-Time Features
+Post-Subscription Process:
 
-Chat support is integrated into the CRM, allowing users (owners, operators, admins) to communicate in real-time.
-WebSockets ensure that events like new messages, status updates, or subscription changes are propagated instantly without polling.
+Main Go server creates a CRM record in the shared DB.
+Generates a secure password and sends it via email.
 
-Security and Data Flow
 
-Authentication is handled via generated passwords and session management on the Go servers.
-Data consistency is maintained through the shared database, with containers communicating via internal networking.
-Email notifications use secure protocols to deliver sensitive information like passwords.
+CRM Login:
 
-Architecture Diagram
-text+--------------------+       +--------------------+
-| Main Website       |       | CRM & Chat Support |
-| (Go Server +       |       | (Go Server +       |
-|  React Vite Front) |       |  React TS Front +  |
-|                    |       |  JS Chat)          |
-+--------------------+       +--------------------+
-           |                           |
-           | (Subscription Success)    |
-           v                           |
-+--------------------+                 |
-| Shared DB Container| <---------------+
-| (User Records, CRM |
-|  Data, etc.)       |
-+--------------------+
+As Owner: Click "Go to CRM" on the main site for seamless login.
+As Operator/Admin: Use invite links provided by owners to access specific projects.
 
-Arrows represent data flow: Subscription creates DB record; CRM references DB for operations.
+
+Operations in CRM:
+
+Manage projects, users, and support via the React TypeScript interface.
+Engage in real-time chat support using JavaScript components.
